@@ -204,12 +204,30 @@ void execute(std::vector<int>& V, const std::vector<int>& res) {
     std::cout << "Divide-and-conquer stable partition\n";
     TND004::stable_partition(copy_, even);
     assert(copy_ == res);  // compare with the expected result
-    */
+   */
 }
 
 // Iterative algorithm
 void TND004::stable_partition_iterative(std::vector<int>& V, std::function<bool(int)> p) {
-    // IMPLEMENT before Lab1 HA
+    std::vector<int> true_part;
+    std::vector<int> false_part;
+
+    true_part.reserve(V.size());
+    false_part.reserve(V.size());
+
+    //For each element x in V
+    for (const int& x : V) {
+        if (p(x)) {
+            true_part.push_back(x);
+        }
+        else {
+            false_part.push_back(x);
+        }
+    }
+
+    // Merge true and false parts back into original vector
+    std::copy(true_part.begin(), true_part.end(), V.begin());
+    std::copy(false_part.begin(), false_part.end(), V.begin() + true_part.size());
 }
 
 /*
@@ -222,7 +240,5 @@ void TND004::stable_partition_iterative(std::vector<int>& V, std::function<bool(
 std::vector<int>::iterator TND004::stable_partition(std::vector<int>::iterator first,
                                                     std::vector<int>::iterator last,
                                                     std::function<bool(int)> p) {
-    // IMPLEMENT
-
-    return first;  // delete this line
+    return first;
 }
