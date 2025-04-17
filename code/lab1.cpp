@@ -199,12 +199,12 @@ void execute(std::vector<int>& V, const std::vector<int>& res) {
     TND004::stable_partition_iterative(V, even);
     assert(V == res);  // compare with the expected result
 
-    /*
+    
     // Uncomment for exercise 2
     std::cout << "Divide-and-conquer stable partition\n";
     TND004::stable_partition(copy_, even);
     assert(copy_ == res);  // compare with the expected result
-   */
+   
 }
 
 // Iterative algorithm
@@ -238,7 +238,26 @@ void TND004::stable_partition_iterative(std::vector<int>& V, std::function<bool(
  * containing the items with property p. Otherwise, return first.
  */
 std::vector<int>::iterator TND004::stable_partition(std::vector<int>::iterator first,
-                                                    std::vector<int>::iterator last,
-                                                    std::function<bool(int)> p) {
-    return first;
+    std::vector<int>::iterator last,
+    std::function<bool(int)> p) {
+    // IMPLEMENT
+
+    std::vector<int>::iterator middle = first + (last - first) / 2;
+
+    if (first == last) {
+        return first;
+    }
+
+    if (last - first <= 1) {
+        if (p(*first)) {
+            return last;
+        }
+        return first;
+    }
+
+    auto it1 = stable_partition(first, middle, p);
+    auto it3 = stable_partition(middle, last, p);
+    auto it4 = std::rotate(it1, middle, it3);
+
+    return it4;
 }
